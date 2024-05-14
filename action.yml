@@ -28,6 +28,7 @@ runs:
       with:
         node-version: '20.x'
     - name: 😈 Setting up Madlib project... 
+      shell: bash
       run: |
         npm install -g @madlib-lang/madlib@${{github.event.inputs.madlibVersion}}
         echo "Madlib installed!"
