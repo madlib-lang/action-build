@@ -39,9 +39,9 @@ runs:
         madlib -v
     - name: "🧪 Testing Madlib, target: LLVM"
       shell: bash
-      if: github.event.inputs.testLLVM == 'true'
+      if: ${{ github.event.inputs.testLLVM == 'true' }}
       run: madlib test --target llvm ${{!github.event.inputs.coverage && '' || '--coverage'}}
     - name: '⚗️  Testing Madlib, target: JS'
-      if: github.event.inputs.testJS == 'true'
+      if: ${{ github.event.inputs.testJS == 'true' }}
       shell: bash
       run: madlib test --target llvm ${{!github.event.inputs.coverage && '' || '--coverage'}}
