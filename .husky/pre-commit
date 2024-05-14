@@ -1,1 +1,1 @@
-npx action-validator action.yml
+./node_modules/.bin/action-validator action.yml

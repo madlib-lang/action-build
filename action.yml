@@ -3,19 +3,19 @@ description: Build and test a Madlib project
 inputs:
   madlibVersion:
     description: What version of Madlib should be used?
-    default: latest
+    default: "latest"
     required: false
   testLLVM:
     description: Should we test Madlib in LLVM mode?
-    default: true
+    default: "1"
     required: false
   testJS:
     description: Should we test Madlib in JS mode?
-    default: true
+    default: "1"
     required: false
   coverage:
     description: Should we capture test coverage?
-    default: true
+    default: "1"
     required: false
 
 runs:
@@ -34,9 +34,11 @@ runs:
         echo "Madlib installed!"
         echo "Madlib version:"
         madlib -v
-    - name: 🧪 Testing Madlib, target: LLVM
+    - name: "🧪 Testing Madlib, target: LLVM"
+      shell: bash
       if: github.event.inputs.testLLVM
       run: madlib test --target llvm ${{github.event.inputs.coverage && "--coverage"}}
-    - name: ⚗️  Testing Madlib, target: JS
+    - name: "⚗️  Testing Madlib, target: JS"
       if: github.event.inputs.testJS
+      shell: bash
       run: madlib test --target llvm ${{github.event.inputs.coverage && "--coverage"}}
