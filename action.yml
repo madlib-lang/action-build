@@ -37,11 +37,5 @@ runs:
         echo "Madlib installed!"
         echo "Madlib version:"
         madlib -v
-    - name: "🧪 Testing Madlib, target: LLVM"
-      shell: bash
-      if: ${{ github.event.inputs.testLLVM == 'true' }}
-      run: madlib test --target llvm ${{!github.event.inputs.coverage && '' || '--coverage'}}
-    - name: '⚗️  Testing Madlib, target: JS'
-      if: ${{ github.event.inputs.testJS == 'true' }}
-      shell: bash
-      run: madlib test --target llvm ${{!github.event.inputs.coverage && '' || '--coverage'}}
+        ${{ github.event.inputs.testLLVM == 'true' && 'madlib test --target llvm ${{!github.event.inputs.coverage && '' || '--coverage'}}'
+        ${{ github.event.inputs.testJS == 'true' && 'madlib test --target js ${{!github.event.inputs.coverage && '' || '--coverage'}}'
