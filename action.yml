@@ -23,24 +23,43 @@ runs:
   steps:
     - name: 🛒 Checking out Madlib repo...
       uses: actions/checkout@v4
+
     - name: ⚙️  Installing node...
       uses: actions/setup-node@v4
       with:
         node-version: '20.x'
+
+    - name: 🔍 Looking up cached data...
+      id: cache-madlib-restore
+      uses: actions/cache/restore@v4
+      with:
+        path: version.lock
+        key: ${{runner.os}}-madlib-save
+
     - name: 😈 Setting up Madlib project... 
       shell: bash
       run: |
         npm install -g @madlib-lang/madlib@${{github.event.inputs.madlibVersion}}
+        madlib install
         echo "Madlib installed!"
         echo "Madlib version:"
         madlib -v
+
     - name: 🧪 Running llvm tests...
       if: github.event.inputs.testLLVM != 'false'
       shell: bash
       run: |
         madlib test --target llvm ${{ github.events.inputs.coverage != 'false' && '--coverage' || '' }}
+
     - name: ⚗️  Running node tests...
       if: github.event.inputs.testJS != 'false'
       shell: bash
       run: |
         madlib test --target node ${{ github.events.inputs.coverage != 'false' && '--coverage' || '' }}
+
+    - name: 🛟 Saving data to cache...
+      id: cache-madlib-save
+      uses: actions/cache/save@v4
+      with:
+        path: version.lock
+        key: ${{ steps.cache-madlib-restore.outputs.cache-primary-key}}
