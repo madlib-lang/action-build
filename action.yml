@@ -34,5 +34,6 @@ runs:
         echo "Madlib installed!"
         echo "Madlib version:"
         madlib -v
+        echo "... ${{github.events.inputs.testLLVM}} <> ${{github.events.inputs.testJS}} <> ${{github.events.inputs.coverage}}" 
         ${{ github.event.inputs.testLLVM && github.events.inputs.coverage && 'madlib test --target llvm --coverage' || github.event.inputs.testLLVM && !github.events.inputs.coverage && 'madlib test --target llvm' || ''}}
         ${{ github.event.inputs.testJS && github.events.inputs.coverage && 'madlib test --target js --coverage' || github.event.inputs.testJS && !github.events.inputs.coverage && 'madlib test --target js' || ''}}
