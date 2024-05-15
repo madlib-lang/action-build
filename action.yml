@@ -8,17 +8,14 @@ inputs:
   testLLVM:
     description: Should we test Madlib in LLVM mode?
     default: ''
-    type: boolean
     required: false
   testJS:
     description: Should we test Madlib in JS mode?
     default: ''
-    type: boolean
     required: false
   coverage:
     description: Should we capture test coverage?
     default: ''
-    type: boolean
     required: false
 
 runs:
@@ -37,5 +34,5 @@ runs:
         echo "Madlib installed!"
         echo "Madlib version:"
         madlib -v
-        ${{ github.event.inputs.testLLVM == 'true' && 'madlib test --target llvm ${{!github.event.inputs.coverage && '' || '--coverage'}}'}}
-        ${{ github.event.inputs.testJS == 'true' && 'madlib test --target js ${{!github.event.inputs.coverage && '' || '--coverage'}}'}}
+        ${{ github.event.inputs.testLLVM && github.events.inputs.coverage && 'madlib test --target llvm --coverage' || github.event.inputs.testLLVM && !github.events.inputs.coverage && 'madlib test --target llvm' || ''}}
+        ${{ github.event.inputs.testJS && github.events.inputs.coverage && 'madlib test --target js --coverage' || github.event.inputs.testJS && !github.events.inputs.coverage && 'madlib test --target js' || ''}}
