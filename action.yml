@@ -35,12 +35,12 @@ runs:
         echo "Madlib version:"
         madlib -v
     - name: 🧪 Testing Madlib project (Target LLVM)...
-      if: github.event.inputs.testLLVM == 'true' || github.event.inputs.testLLVM == true
+      if: github.event.inputs.testLLVM != 'false'
       shell: bash
       run: |
-        madlib test --target llvm {{ github.events.inputs.coverage == 'true' && '--coverage' || '' }}
+        madlib test --target llvm ${{ github.events.inputs.coverage != 'false' && '--coverage' || '' }}
     - name: ⚗️  Testing Madlib project (Target Node)...
-      if: github.event.inputs.testJS == 'true' || github.event.inputs.testJS == true
+      if: github.event.inputs.testJS != 'false'
       shell: bash
       run: |
-        madlib test --target node {{ github.events.inputs.coverage == 'true' && '--coverage' || '' }}
+        madlib test --target node ${{ github.events.inputs.coverage != 'false' && '--coverage' || '' }}
