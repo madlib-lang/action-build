@@ -36,4 +36,4 @@ runs:
         madlib -v
         echo "... ${{github.events.inputs.testLLVM}} <> ${{github.events.inputs.testJS}} <> ${{github.events.inputs.coverage}}" 
         ${{ !github.event.inputs.testLLVM && !github.events.inputs.coverage && '' || github.event.inputs.testLLVM && !github.events.inputs.coverage && 'madlib test --target llvm' || 'madlib test --target llvm --coverage'}}
-        ${{ !github.event.inputs.testJS && !github.events.inputs.coverage && '' || github.event.inputs.testJS && !github.events.inputs.coverage && 'madlib test --target js' || 'madlib test --target js --coverage'}}
+        ${{ !github.event.inputs.testJS && !github.events.inputs.coverage && '' || github.event.inputs.testJS && !github.events.inputs.coverage && 'madlib test --target node' || 'madlib test --target node --coverage'}}
